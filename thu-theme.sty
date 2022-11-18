@@ -1,0 +1,140 @@
+% \usepackage{opensans}
+\usepackage{anyfontsize}
+
+\def\defineCMYKcolor(#1,#2,#3,#4)#5{%
+    \pgfmathsetmacro{\myc}{#1/100}%
+    \pgfmathsetmacro{\mym}{#2/100}%
+    \pgfmathsetmacro{\myy}{#3/100}%
+    \pgfmathsetmacro{\myk}{#4/100}%
+    \definecolor{#5}{cmyk}{\myc,\mym,\myy,\myk}%
+}
+
+% -- COLORS --
+
+% Tsinghua University primary palette
+\defineCMYKcolor(65,100,0,20){THUPurple} 
+\defineCMYKcolor(10,90,20,0){THUPurpleLight} 
+
+
+% Neutrals palette
+\definecolor{Black}{HTML}{101820} % Pantone Black 6
+
+% tikzposter color palette
+\definecolorpalette{THUPalette} {%
+    \definecolor{colorOne}{named}{THUPurple}
+    \definecolor{colorTwo}{named}{THUPurpleLight}
+}
+
+% tikzposter style
+\definecolorstyle{THUStyle} {%
+    \usecolorpalette{THUPalette}
+}{%
+    % background
+    \colorlet{backgroundcolor}{white}
+    \colorlet{framecolor}{white}
+    % title colors
+    \colorlet{titlefgcolor}{black}
+    \colorlet{titlebgcolor}{white}
+    % block colors
+    \colorlet{blocktitlebgcolor}{colorOne}
+    \colorlet{blocktitlefgcolor}{black}
+    \colorlet{blockbodybgcolor}{white}
+    \colorlet{blockbodyfgcolor}{black}
+    % innerblock colors
+    \colorlet{innerblocktitlebgcolor}{white}
+    \colorlet{innerblocktitlefgcolor}{black}
+    \colorlet{innerblockbodybgcolor}{colorTwo}
+    \colorlet{innerblockbodyfgcolor}{black}
+    % note colors
+    \colorlet{notefgcolor}{black}
+    \colorlet{notebgcolor}{colorTwo}
+    \colorlet{noteframecolor}{colorTwo}
+}
+
+% -- STYLE --
+
+% background
+\definebackgroundstyle{THUBackgroundStyle}{%
+    \draw[line width=0pt, color=framecolor, fill=backgroundcolor]
+    (bottomleft) rectangle (topright);
+}
+
+% title
+\definetitlestyle{THUTitleStyle}{%
+    width=\textwidth, linewidth=5pt,
+    titletotopverticalspace=0mm, titletoblockverticalspace=5mm
+}{%
+    \begin{scope}[line width=\titlelinewidth,]
+    \draw[color=blocktitlebgcolor,fill=titlebgcolor]
+    (\titleposleft + 15mm,\titleposbottom) rectangle (\titleposright - 15mm,\titlepostop);
+    \end{scope}
+}
+
+% block
+\defineblockstyle{THUBlockStyle}{%
+	titleoffsety = -40pt,
+    titlewidthscale=0.6, bodywidthscale=1, linewidth=5pt,
+}{%
+    \draw[color=blocktitlebgcolor, fill=blockbodybgcolor, line width=5pt] (blockbody.south west)
+    rectangle (blockbody.north east);
+    \ifBlockHasTitle
+    \draw[color=white,fill=white] (blocktitle.south west)
+    rectangle (blocktitle.north east);
+    \fi
+}
+
+% -- THEME --
+% Tsinghua University Theme
+\definelayouttheme{THUTheme}{%
+    \usecolorstyle[colorPalette=THUPalette]{THUStyle}
+    \usebackgroundstyle{THUBackgroundStyle}
+    \usetitlestyle{THUTitleStyle}
+    \useblockstyle{THUBlockStyle}
+    \useinnerblockstyle{Default}
+    \usenotestyle{Default}
+}
+
+% -- TITLE FORMAT --
+
+% place logo to right of centered title
+\makeatletter
+\renewcommand\TP@maketitle{%
+\centering
+\begin{minipage}[c]{0.15\textwidth}%
+	\centering
+	\includegraphics[width=0.6\linewidth]{img/THU_logo.pdf}
+\end{minipage}%
+%
+\begin{minipage}[c]{0.7\textwidth}%
+	\centering
+	\color{titlefgcolor}
+	{\bfseries \Huge \sc \textbf{\@title} \par}
+	\vspace*{1em}
+	{\huge \@author \par}
+	\vspace*{1em}
+	{\Large \@institute}
+\end{minipage}%
+%
+\begin{minipage}[c]{0.15\textwidth}%
+	\centering
+	\hfill % Remove this line if adding a second university image
+	% \includegraphics[width=0.6\textwidth]{img/other_logo.pdf}
+\end{minipage}
+%
+}
+\makeatother
+
+\usepackage{xpatch}
+\xpatchcmd{\block}{\bf\LARGE\color{blocktitlefgcolor}}{\bfseries\LARGE\color{blocktitlefgcolor}}{}{}
+
+% Simple commands to use color text in the poster
+\usepackage{color}
+\newcommand{\colortext}[2]{{\color{#1} #2}}
+\newcommand{\blue}[1]{\colortext{blue}{#1}}
+\newcommand{\green}[1]{\colortext{green}{#1}}
+\newcommand{\uogreen}[1]{\colortext{UOPineGreen}{#1}}
+\newcommand{\red}[1]{\colortext{red}{#1}}
+
+% Allows use of social media icons
+% \usepackage{fontawesome}
+% Examples Include: \faGithub, \faLinkedin, \faStackExchange, and \faStackOverflow

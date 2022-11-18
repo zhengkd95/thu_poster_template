@@ -1,0 +1,87 @@
+\documentclass[20pt,margin=0.25in,blockverticalspace=-0.1in,parskip=2em]{tikzposter}
+
+\geometry{paperwidth=42in,paperheight=30in}
+% Update tikzposter calculations for all margins
+\makeatletter
+\setlength{\TP@visibletextwidth}{\textwidth-2\TP@innermargin}
+\setlength{\TP@visibletextheight}{\textheight-2\TP@innermargin}
+\makeatother
+
+\usepackage[utf8]{inputenc}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\usepackage{thu-theme}
+
+\usepackage{mwe} % for placeholder images
+
+\addbibresource{refs.bib}
+
+% set theme parameters
+\tikzposterlatexaffectionproofoff%
+\usetheme{THUTheme}
+\usecolorstyle{THUStyle}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\title{Tsinghua University Scientific Computing Poster Template}
+\author{Kedi~Zheng\textsuperscript{$\dagger$} and Someone~Else\textsuperscript{$\ddagger$}}
+\institute{\textsuperscript{$\dagger$}Department of Electrical Engineering, Tsinghua University\\\vspace{6pt}
+           \textsuperscript{$\ddagger$}Department of Something, Tsinghua University}
+
+% begin document
+\begin{document}
+\maketitle
+\centering
+\begin{columns}
+    \column{0.32}
+    \block{An Important Problem}{%
+      \lipsum[1]
+    }
+    \block[titlewidthscale=0.3]{Model}{%
+        \lipsum[2]
+    }
+    \block[titlewidthscale=0.4]{Inverse Problem}{%
+        \lipsum[4-6]
+    }
+
+    \column{0.36}
+    \block[titlewidthscale=0.3]{Results}{%
+        \lipsum[6]
+
+        \vspace{1em}
+        \begin{tikzfigure}[Big fancy graphic.]
+            \includegraphics[width=0.9\linewidth]{example-image}
+        \end{tikzfigure}
+        \vspace{1em}
+
+        \lipsum[7-8]
+    }
+
+    \column{0.32}
+    \block[titlewidthscale=0.3]{Comparison}{%
+        \lipsum[9]
+
+        \begin{tikzfigure}[Look, my method is better.]
+            \includegraphics[width=0.5\linewidth]{example-image}
+        \end{tikzfigure}
+
+        \lipsum[10]
+    }
+
+    \block[titlewidthscale=0.3]{Remarks}{%
+      \lipsum[11]
+    }
+
+    \block[titlewidthscale=0.5]{Acknowledgements}{%
+      I would like to thank ... ~\cite{cite:0,cite:1}.
+    }
+
+    \block[titlewidthscale=0.3]{References}{%
+        \vspace{-1em}
+        \begin{footnotesize}
+            \printbibliography[heading=none]
+        \end{footnotesize}
+    }
+\end{columns}
+\end{document}
