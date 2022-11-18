@@ -11,3 +11,4 @@ latexmk -c
 
 **Note**: This template is *not* officially sanctioned by Tsinghua University.  The template is provided in case it is useful to other students.  
 
+![Example](img/example.jpg)
